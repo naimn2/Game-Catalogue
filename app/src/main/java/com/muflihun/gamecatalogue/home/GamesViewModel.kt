@@ -1,4 +1,4 @@
-package com.muflihun.gamecatalogue
+package com.muflihun.gamecatalogue.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,10 +11,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class GamesViewModel @Inject constructor (gameUseCase: GameUseCase) : ViewModel() {
+class GamesViewModel @Inject constructor (private val gameUseCase: GameUseCase) : ViewModel() {
     private var _game: LiveData<Resource<List<Game>>> = MutableLiveData()
-
-    private var _gameUseCase = gameUseCase
 
     fun getGames(
         page: Int?,
@@ -22,7 +20,7 @@ class GamesViewModel @Inject constructor (gameUseCase: GameUseCase) : ViewModel(
         ordering: String?,
         key: String,
     ): LiveData<Resource<List<Game>>> {
-        _game = _gameUseCase.getAllGames(page, pageSize, ordering, key).asLiveData()
+        _game = gameUseCase.getAllGames(page, pageSize, ordering, key).asLiveData()
         return _game
     }
 }

@@ -25,5 +25,6 @@ data class Game(
 	val dominantColor: String? = null,
 	val name: String? = null,
 	val updated: String? = null,
-	val reviewsCount: Int? = null
+	val reviewsCount: Int? = null,
+	val isFavorite: Boolean = false,
 ) : Parcelable

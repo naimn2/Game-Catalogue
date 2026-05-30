@@ -49,6 +49,7 @@ object DataMapper {
                 reviewsCount = it.reviewsCount,
                 genres = it.genres,
                 platforms = it.platforms,
+                isFavorite = it.isFavorite,
             )
         }
 
@@ -70,5 +71,6 @@ object DataMapper {
         reviewsCount = input.reviewsCount,
         genres = input.genres,
         platforms = input.platforms,
+        isFavorite = input.isFavorite,
     )
 }

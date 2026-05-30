@@ -44,7 +44,5 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(libs.hilt.android)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
     ksp(libs.hilt.android.compiler)
 }

@@ -10,9 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muflihun.core.data.Resource
 import com.muflihun.core.ui.GameAdapter
-import com.muflihun.gamecatalogue.GamesViewModel
+import com.muflihun.gamecatalogue.home.GamesViewModel
 import com.muflihun.gamecatalogue.R
 import com.muflihun.gamecatalogue.databinding.FragmentHomeBinding
+import com.muflihun.gamecatalogue.detail.DetailGameActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
@@ -37,11 +38,11 @@ class HomeFragment : Fragment() {
         if (activity != null) {
 
             val gameAdapter = GameAdapter()
-//            gameAdapter.onItemClick = { selectedData ->
-//                val intent = Intent(activity, DetailGameActivity::class.java)
-//                intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
-//                startActivity(intent)
-//            }
+            gameAdapter.onItemClick = { selectedData ->
+                val intent = Intent(activity, DetailGameActivity::class.java)
+                intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
+                startActivity(intent)
+            }
 
             gamesViewModel.getGames(
                 1,

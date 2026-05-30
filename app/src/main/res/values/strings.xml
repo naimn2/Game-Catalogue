@@ -11,4 +11,5 @@
     <string name="text_title">Title</string>
     <string name="text_subtitle">Subtitle</string>
     <string name="something_wrong">Oops, something went wrong. Pleas try again later!</string>
+    <string name="empty" />
 </resources>

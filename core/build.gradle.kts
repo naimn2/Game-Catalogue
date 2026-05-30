@@ -63,6 +63,12 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
+    api(libs.androidx.navigation.fragment)
+    api(libs.androidx.navigation.ui)
+    api(libs.androidx.appcompat)
+    api(libs.material)
+    api(libs.androidx.constraintlayout)
+
     api(libs.androidx.activity.ktx)
     api(libs.androidx.fragment.ktx)
 
