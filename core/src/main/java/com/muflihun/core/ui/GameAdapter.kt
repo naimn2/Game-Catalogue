@@ -1,5 +1,6 @@
 package com.muflihun.core.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -29,12 +30,14 @@ class GameAdapter : ListAdapter<Game, GameAdapter.ListViewHolder>(DIFF_CALLBACK)
 
     inner class ListViewHolder(private var binding: ItemListGameBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(data: Game) {
             Glide.with(itemView.context)
                 .load(data.backgroundImage)
                 .into(binding.ivItemImage)
             binding.tvItemTitle.text = data.name
-            binding.tvItemSubtitle.text = data.rating.toString()
+            binding.tvItemSubtitle.text = "${data.genres ?: "-"} | ${data.platforms ?: "-"}"
+            binding.tvItemRating.text = data.rating.toString()
         }
 
         init {

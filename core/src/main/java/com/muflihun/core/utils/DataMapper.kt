@@ -1,12 +1,12 @@
 package com.muflihun.core.utils
 
 import com.muflihun.core.data.source.local.entity.GameEntity
-import com.muflihun.core.data.source.remote.response.ResultsItem
+import com.muflihun.core.data.source.remote.response.GameResponse
 import com.muflihun.core.domain.model.Game
 
 object DataMapper {
-    fun mapResponsesToEntities(input: List<ResultsItem>): List<GameEntity> =
-        input.map {
+    fun mapResponsesToEntities(input: List<GameResponse>): List<GameEntity> =
+        input.map { it ->
             GameEntity(
                 gameId = it.id,
                 name = it.name,
@@ -24,6 +24,8 @@ object DataMapper {
                 updated = it.updated,
                 reviewsCount = it.reviewsCount,
                 isFavorite = false,
+                genres = it.genres?.joinToString(", ") { genre -> genre?.name.toString() },
+                platforms = it.platforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() }
             )
         }
 
@@ -45,6 +47,8 @@ object DataMapper {
                 suggestionsCount = it.suggestionsCount,
                 updated = it.updated,
                 reviewsCount = it.reviewsCount,
+                genres = it.genres,
+                platforms = it.platforms,
             )
         }
 
@@ -64,5 +68,7 @@ object DataMapper {
         suggestionsCount = input.suggestionsCount,
         updated = input.updated,
         reviewsCount = input.reviewsCount,
+        genres = input.genres,
+        platforms = input.platforms,
     )
 }

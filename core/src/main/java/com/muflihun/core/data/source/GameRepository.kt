@@ -5,7 +5,7 @@ import com.muflihun.core.data.Resource
 import com.muflihun.core.data.source.local.LocalDataSource
 import com.muflihun.core.data.source.remote.RemoteDataSource
 import com.muflihun.core.data.source.remote.network.ApiResponse
-import com.muflihun.core.data.source.remote.response.ResultsItem
+import com.muflihun.core.data.source.remote.response.GameResponse
 import com.muflihun.core.domain.model.Game
 import com.muflihun.core.domain.repository.IGameRepository
 import com.muflihun.core.utils.AppExecutors
@@ -28,7 +28,7 @@ class GameRepository @Inject constructor(
         ordering: String?,
         key: String,
     ): Flow<Resource<List<Game>>> =
-        object : NetworkBoundResource<List<Game>, List<ResultsItem>>() {
+        object : NetworkBoundResource<List<Game>, List<GameResponse>>() {
             override fun loadFromDB(): Flow<List<Game>> {
                 return localDataSource.getAllGame().map {
                     DataMapper.mapEntitiesToDomain(it)
@@ -38,10 +38,10 @@ class GameRepository @Inject constructor(
             override fun shouldFetch(data: List<Game>?): Boolean =
                 data.isNullOrEmpty()
 
-            override suspend fun createCall(): Flow<ApiResponse<List<ResultsItem>>> =
+            override suspend fun createCall(): Flow<ApiResponse<List<GameResponse>>> =
                 remoteDataSource.getAllGames(page, pageSize, ordering, key)
 
-            override suspend fun saveCallResult(data: List<ResultsItem>) {
+            override suspend fun saveCallResult(data: List<GameResponse>) {
                 val gameList = DataMapper.mapResponsesToEntities(data)
                 localDataSource.insertGame(gameList)
             }

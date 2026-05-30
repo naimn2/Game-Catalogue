@@ -2,7 +2,7 @@ package com.muflihun.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultsItem(
+data class GameResponse(
 
 	@field:SerializedName("added")
 	val added: Int? = null,

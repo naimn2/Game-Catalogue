@@ -5,11 +5,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
-import com.muflihun.core.domain.model.GenresItem
-import com.muflihun.core.domain.model.ParentPlatformsItem
-import com.muflihun.core.domain.model.PlatformsItem
-import com.muflihun.core.domain.model.ShortScreenshotsItem
 
 @Parcelize
 @Entity(tableName = "game")
@@ -24,8 +19,8 @@ data class GameEntity(
 //@ColumnInfo(name = "shortScreenshots")
 //	val shortScreenshots: List<ShortScreenshotsItem?>? = null,
 
-//@ColumnInfo(name = "platforms")
-//	val platforms: List<PlatformsItem?>? = null,
+    @ColumnInfo(name = "platforms")
+	val platforms: String? = null,
 
 	@ColumnInfo(name = "ratingTop")
     val ratingTop: Int? = null,
@@ -33,8 +28,8 @@ data class GameEntity(
 	@ColumnInfo(name = "reviewsTextCount")
     val reviewsTextCount: Int? = null,
 
-//@ColumnInfo(name = "genres")
-//	val genres: List<GenresItem?>? = null,
+    @ColumnInfo(name = "genres")
+	val genres: String? = null,
 
 	@ColumnInfo(name = "saturatedColor")
     val saturatedColor: String? = null,

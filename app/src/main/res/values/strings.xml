@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Game Catalogue</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_detail">Detail Game</string>
+    <string name="image_description">Game Image</string>
+    <string name="error_message">Something went wrong</string>
+    <string name="empty_favorite">No favorite game found</string>
+    <string name="label_rating">Rating:</string>
+    <string name="label_release_date">Release Date:</string>
+    <string name="text_title">Title</string>
+    <string name="text_subtitle">Subtitle</string>
+    <string name="something_wrong">Oops, something went wrong. Pleas try again later!</string>
 </resources>

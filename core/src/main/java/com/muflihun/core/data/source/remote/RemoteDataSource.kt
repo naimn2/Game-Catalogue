@@ -3,7 +3,7 @@ package com.muflihun.core.data.source.remote
 import android.util.Log
 import com.muflihun.core.data.source.remote.network.ApiResponse
 import com.muflihun.core.data.source.remote.network.ApiService
-import com.muflihun.core.data.source.remote.response.ResultsItem
+import com.muflihun.core.data.source.remote.response.GameResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +19,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         pageSize: Int?,
         ordering: String?,
         key: String,
-    ): Flow<ApiResponse<List<ResultsItem>>> {
+    ): Flow<ApiResponse<List<GameResponse>>> {
         return flow {
             try {
                 val response = apiService.getGames(page, pageSize, ordering, key)

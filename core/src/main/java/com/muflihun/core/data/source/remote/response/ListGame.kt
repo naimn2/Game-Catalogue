@@ -4,42 +4,42 @@ import com.google.gson.annotations.SerializedName
 
 data class ListGame(
 
-	@field:SerializedName("next")
+    @field:SerializedName("next")
 	val next: String? = null,
 
-	@field:SerializedName("nofollow")
+    @field:SerializedName("nofollow")
 	val nofollow: Boolean? = null,
 
-	@field:SerializedName("noindex")
+    @field:SerializedName("noindex")
 	val noindex: Boolean? = null,
 
-	@field:SerializedName("nofollow_collections")
+    @field:SerializedName("nofollow_collections")
 	val nofollowCollections: List<String?>? = null,
 
-	@field:SerializedName("previous")
+    @field:SerializedName("previous")
 	val previous: String? = null,
 
-	@field:SerializedName("count")
+    @field:SerializedName("count")
 	val count: Int? = null,
 
-	@field:SerializedName("description")
+    @field:SerializedName("description")
 	val description: String? = null,
 
-	@field:SerializedName("seo_h1")
+    @field:SerializedName("seo_h1")
 	val seoH1: String? = null,
 
-	@field:SerializedName("filters")
+    @field:SerializedName("filters")
 	val filters: Filters? = null,
 
-	@field:SerializedName("seo_title")
+    @field:SerializedName("seo_title")
 	val seoTitle: String? = null,
 
-	@field:SerializedName("seo_description")
+    @field:SerializedName("seo_description")
 	val seoDescription: String? = null,
 
-	@field:SerializedName("results")
-	val results: List<ResultsItem>,
+    @field:SerializedName("results")
+	val results: List<GameResponse>,
 
-	@field:SerializedName("seo_keywords")
+    @field:SerializedName("seo_keywords")
 	val seoKeywords: String? = null
 )
