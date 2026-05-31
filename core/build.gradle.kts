@@ -74,4 +74,6 @@ dependencies {
 
     api(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    implementation(libs.androidx.junit.ktx)
 }
