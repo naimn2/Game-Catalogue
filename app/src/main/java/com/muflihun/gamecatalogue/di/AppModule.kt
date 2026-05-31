@@ -11,9 +11,4 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 abstract class AppModule {
-
-    @Binds
-    @ViewModelScoped
-    abstract fun provideGameUseCase(gameInteractor: GameInteractor): GameUseCase
-
 }
