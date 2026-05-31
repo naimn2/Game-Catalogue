@@ -28,13 +28,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Inside :feature:home module
-//        val request = NavDeepLinkRequest.Builder
-//            .fromUri("myapp://favorite".toUri())
-//            .build()
-//        navController.navigate(request)
-
-
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_favorite
