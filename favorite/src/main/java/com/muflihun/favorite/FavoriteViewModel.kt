@@ -1,4 +1,4 @@
-package com.muflihun.gamecatalogue.favorite
+package com.muflihun.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData

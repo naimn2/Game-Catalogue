@@ -1,4 +1,4 @@
-package com.muflihun.gamecatalogue.favorite
+package com.muflihun.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muflihun.core.ui.GameAdapter
-import com.muflihun.gamecatalogue.databinding.FragmentFavoriteBinding
-import com.muflihun.gamecatalogue.databinding.FragmentHomeBinding
+import com.muflihun.favorite.databinding.FragmentFavoriteBinding
 import com.muflihun.gamecatalogue.detail.DetailGameActivity
-import com.muflihun.gamecatalogue.home.GamesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
+import kotlin.jvm.java
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -52,11 +51,10 @@ class FavoriteFragment : Fragment() {
             }
 
             with(binding.rvGame) {
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = LinearLayoutManager(activity?.applicationContext)
                 setHasFixedSize(true)
                 adapter = gameAdapter
             }
-
         }
     }
 }

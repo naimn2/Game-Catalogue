@@ -65,6 +65,7 @@ dependencies {
 
     api(libs.androidx.navigation.fragment)
     api(libs.androidx.navigation.ui)
+    api(libs.androidx.navigation.dynamic)
     api(libs.androidx.appcompat)
     api(libs.material)
     api(libs.androidx.constraintlayout)
