@@ -31,17 +31,17 @@ class DetailGameActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         game?.let {
-            val currentStatusFavorite = game.isFavorite
+            var currentStatusFavorite = game.isFavorite
             setStatusFavoriteIcon(currentStatusFavorite)
-        }
-
-        binding.fab.setOnClickListener {
-            game?.let {
-                val newStatus = !game.isFavorite
-                viewModel.setFavoriteGame(game, newStatus)
-                setStatusFavoriteIcon(newStatus)
+            binding.fab.setOnClickListener {
+                game.let {
+                    currentStatusFavorite = !currentStatusFavorite
+                    viewModel.setFavoriteGame(game, currentStatusFavorite)
+                    setStatusFavoriteIcon(currentStatusFavorite)
+                }
             }
         }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
