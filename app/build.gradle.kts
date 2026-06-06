@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.muflihun.gamecatalogue"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.muflihun.gamecatalogue"
