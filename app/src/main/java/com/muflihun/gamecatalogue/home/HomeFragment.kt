@@ -26,6 +26,10 @@ class HomeFragment : Fragment() {
     private lateinit var gameAdapter: GameAdapter
     private lateinit var popupMenu: PopupMenu
 
+    private var currentSorting = "-rating"
+
+    private var currentPage = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -57,9 +61,11 @@ class HomeFragment : Fragment() {
                 sortingChip.setOnClickListener {
                     setupSortingChip()
                 }
+
+                setupBtnPageNavigation()
             }
 
-            getGames("-rating")
+            getGames()
         }
     }
 
@@ -68,13 +74,17 @@ class HomeFragment : Fragment() {
             when (item.itemId) {
                 R.id.menu_release -> {
                     binding.sortingChip.text = getString(R.string.sorting_by_released)
-                    getGames("-released")
+                    currentSorting = "-released"
+                    currentPage = 1
+                    getGames()
                     true
                 }
 
                 R.id.menu_rating -> {
                     binding.sortingChip.text = getString(R.string.sorting_by_rating)
-                    getGames("-rating")
+                    currentSorting = "-rating"
+                    currentPage = 1
+                    getGames()
                     true
                 }
 
@@ -84,31 +94,65 @@ class HomeFragment : Fragment() {
         popupMenu.show()
     }
 
-    private fun getGames(ordering: String) {
+    private fun setupBtnPageNavigation() {
+        with(binding) {
+            tvPage.text = currentPage.toString()
+            btnPrevPage.setOnClickListener {
+                currentPage--
+                getGames()
+            }
+            btnNextPage.setOnClickListener {
+                currentPage++
+                getGames()
+            }
+        }
+    }
+
+    private fun getGames() {
         gamesViewModel.getGames(
-            1, 20, ordering, BuildConfig.RAWG_API_KEY
+            currentPage, 20, currentSorting, BuildConfig.RAWG_API_KEY
         ).observe(viewLifecycleOwner) { game ->
             if (game != null) {
-                when (game) {
-                    is Resource.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.viewError.root.visibility = View.GONE
-                    }
+                with(binding) {
+                    when (game) {
+                        is Resource.Loading -> {
+                            progressBar.visibility = View.VISIBLE
+                            viewError.root.visibility = View.GONE
+                            setEnabledNextButton(false)
+                            setEnabledPrevButton(false)
+                        }
 
-                    is Resource.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        gameAdapter.submitList(game.data)
-                    }
+                        is Resource.Success -> {
+                            progressBar.visibility = View.GONE
+                            gameAdapter.submitList(game.data)
+                            setEnabledNextButton(game.data?.isNotEmpty() == true)
+                            setEnabledPrevButton(currentPage > 1)
+                            tvPage.text = currentPage.toString()
+                        }
 
-                    is Resource.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.viewError.root.visibility = View.VISIBLE
-                        binding.viewError.tvError.text =
-                            game.message ?: getString(R.string.something_wrong)
+                        is Resource.Error -> {
+                            progressBar.visibility = View.GONE
+                            viewError.root.visibility = View.VISIBLE
+                            viewError.tvError.text =
+                                game.message ?: getString(R.string.something_wrong)
+                            setEnabledNextButton(game.data?.isNotEmpty() == true)
+                            setEnabledPrevButton(currentPage > 1)
+                            tvPage.text = currentPage.toString()
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun setEnabledNextButton(enable: Boolean) {
+        binding.btnNextPage.isEnabled = enable
+        binding.btnNextPage.setImageResource(if (enable) R.drawable.navigation_arrow_forward else R.drawable.navigation_arrow_forward_disabled)
+    }
+
+    private fun setEnabledPrevButton(enable: Boolean) {
+        binding.btnPrevPage.isEnabled = enable
+        binding.btnPrevPage.setImageResource(if (enable) R.drawable.navigation_arrow_back else R.drawable.navigation_arrow_back_disabled)
     }
 
     override fun onDestroyView() {

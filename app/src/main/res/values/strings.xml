@@ -21,4 +21,6 @@
     <string name="sorting_by">Sorting by:</string>
     <string name="sorting_by_released">Sorting by: Released</string>
     <string name="sorting_by_rating">Sorting by: Rating</string>
+    <string name="page">Page</string>
+    <string name="initial_page">1</string>
 </resources>
