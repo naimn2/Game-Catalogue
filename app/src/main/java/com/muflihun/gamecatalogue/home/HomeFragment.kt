@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muflihun.core.data.Resource
 import com.muflihun.core.ui.GameAdapter
-import com.muflihun.gamecatalogue.home.GamesViewModel
+import com.muflihun.gamecatalogue.BuildConfig
 import com.muflihun.gamecatalogue.R
 import com.muflihun.gamecatalogue.databinding.FragmentHomeBinding
 import com.muflihun.gamecatalogue.detail.DetailGameActivity
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
                 1,
                 20,
                 "-rating",
-                "772b302f010d4c4ab00afca96715979a"
+                BuildConfig.RAWG_API_KEY
             ).observe(viewLifecycleOwner) { game ->
                 if (game != null) {
                     when (game) {
