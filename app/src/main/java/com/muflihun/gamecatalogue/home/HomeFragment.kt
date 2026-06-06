@@ -25,8 +25,7 @@ class HomeFragment : Fragment() {
     private val gamesViewModel: GamesViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -36,41 +35,40 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
+            with(binding) {
+                val gameAdapter = GameAdapter()
+                gameAdapter.onItemClick = { selectedData ->
+                    val intent = Intent(activity, DetailGameActivity::class.java)
+                    intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
+                    startActivity(intent)
+                }
 
-            val gameAdapter = GameAdapter()
-            gameAdapter.onItemClick = { selectedData ->
-                val intent = Intent(activity, DetailGameActivity::class.java)
-                intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
-                startActivity(intent)
-            }
+                gamesViewModel.getGames(
+                    1, 20, "-rating", BuildConfig.RAWG_API_KEY
+                ).observe(viewLifecycleOwner) { game ->
+                    if (game != null) {
+                        when (game) {
+                            is Resource.Loading -> progressBar.visibility = View.VISIBLE
+                            is Resource.Success -> {
+                                progressBar.visibility = View.GONE
+                                gameAdapter.submitList(game.data)
+                            }
 
-            gamesViewModel.getGames(
-                1,
-                20,
-                "-rating",
-                BuildConfig.RAWG_API_KEY
-            ).observe(viewLifecycleOwner) { game ->
-                if (game != null) {
-                    when (game) {
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is Resource.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            gameAdapter.submitList(game.data)
-                        }
-                        is Resource.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            binding.viewError.root.visibility = View.VISIBLE
-                            binding.viewError.tvError.text =
-                                game.message ?: getString(R.string.something_wrong)
+                            is Resource.Error -> {
+                                progressBar.visibility = View.GONE
+                                viewError.root.visibility = View.VISIBLE
+                                viewError.tvError.text =
+                                    game.message ?: getString(R.string.something_wrong)
+                            }
                         }
                     }
                 }
-            }
 
-            with(binding.rvGame) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                adapter = gameAdapter
+                with(rvGame) {
+                    layoutManager = LinearLayoutManager(context)
+                    setHasFixedSize(true)
+                    adapter = gameAdapter
+                }
             }
         }
     }

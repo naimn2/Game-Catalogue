@@ -51,13 +51,15 @@ class DetailGameActivity : AppCompatActivity() {
 
     private fun showDetailGame(game: Game?) {
         game?.let {
-            binding.tvDetailTitle.text = game.name
-            binding.tvDetailRating.text = game.rating.toString()
-            binding.tvDetailRelease.text = game.genres
-            binding.tvDetailDescription.text = game.platforms
-            Glide.with(this@DetailGameActivity)
-                .load(game.backgroundImage)
-                .into(binding.ivDetailImage)
+            with(binding) {
+                tvDetailTitle.text = game.name
+                tvDetailRating.text = game.rating.toString()
+                tvDetailRelease.text = game.genres
+                tvDetailDescription.text = game.platforms
+                Glide.with(this@DetailGameActivity)
+                    .load(game.backgroundImage)
+                    .into(ivDetailImage)
+            }
         }
     }
 
