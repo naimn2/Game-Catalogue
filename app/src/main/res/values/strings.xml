@@ -18,4 +18,7 @@
     <string name="screenshots_of_game">Game Screenshots</string>
     <string name="tags">Tags</string>
     <string name="detail_star">detail_star</string>
+    <string name="sorting_by">Sorting by:</string>
+    <string name="sorting_by_released">Sorting by: Released</string>
+    <string name="sorting_by_rating">Sorting by: Rating</string>
 </resources>
