@@ -80,11 +80,12 @@
 
             <TextView
                 android:id="@+id/tv_detail_rating"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_rating"
                 app:layout_constraintStart_toEndOf="@+id/detail_star"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="4.5" />
 
             <TextView
@@ -99,10 +100,13 @@
 
             <TextView
                 android:id="@+id/tv_detail_genre"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_genre"
                 app:layout_constraintStart_toStartOf="@+id/tv_detail_platform"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Action, RPG" />
 
             <TextView
@@ -117,12 +121,15 @@
 
             <TextView
                 android:id="@+id/tv_detail_platform"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/tv_detail_padding"
+                android:maxLines="2"
+                android:ellipsize="end"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_platform"
                 app:layout_constraintStart_toEndOf="@id/label_platform"
-                tools:text="PC, PS5, Nintendo Switch" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="PC, PS5, Nintendo Switch, PC, PS5, Nintendo Switch, PC, PS5, Nintendo Switch" />
 
             <TextView
                 android:id="@+id/label_tags"
