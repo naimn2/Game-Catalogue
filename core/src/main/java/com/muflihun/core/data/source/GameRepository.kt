@@ -29,6 +29,9 @@ class GameRepository @Inject constructor(
         key: String,
     ): Flow<Resource<List<Game>>> =
         object : NetworkBoundResource<List<Game>, List<GameResponse>>() {
+            override fun onCallSuccess(data: List<GameResponse>): List<Game> =
+                DataMapper.mapResponsesToDomain(data)
+
             override fun loadFromDB(): Flow<List<Game>> {
                 return localDataSource.getAllGame().map {
                     DataMapper.mapEntitiesToDomain(it)

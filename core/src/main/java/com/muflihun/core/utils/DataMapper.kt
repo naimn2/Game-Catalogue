@@ -31,6 +31,32 @@ object DataMapper {
             )
         }
 
+    fun mapResponsesToDomain(input: List<GameResponse>): List<Game> =
+        input.map {
+            Game(
+                id = it.id,
+                name = it.name,
+                backgroundImage = it.backgroundImage,
+                rating = it.rating,
+                slug = it.slug,
+                tba = it.tba,
+                dominantColor = it.dominantColor,
+                saturatedColor = it.saturatedColor,
+                playtime = it.playtime,
+                ratingTop = it.ratingTop,
+                reviewsTextCount = it.reviewsTextCount,
+                ratingsCount = it.ratingsCount,
+                suggestionsCount = it.suggestionsCount,
+                updated = it.updated,
+                reviewsCount = it.reviewsCount,
+                isFavorite = false,
+                genres = it.genres?.joinToString(", ") { genre -> genre?.name.toString() },
+                platforms = it.platforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() },
+                shortScreenshots = it.shortScreenshots?.joinToString(", ") { screeenshot -> screeenshot?.image.toString() },
+                tags = it.tags?.joinToString(", ") { tag -> tag?.name.toString() }
+            )
+        }
+
     fun mapEntitiesToDomain(input: List<GameEntity>): List<Game> =
         input.map {
             Game(

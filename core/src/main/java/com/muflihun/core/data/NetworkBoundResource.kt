@@ -13,8 +13,10 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         val dbSource = loadFromDB().first()
         when (val apiResponse = createCall().first()) {
             is ApiResponse.Success -> {
-                saveCallResult(apiResponse.data)
-                emitAll(loadFromDB().map { Resource.Success(it) })
+                val data = apiResponse.data
+                saveCallResult(data)
+                val result = onCallSuccess(data)
+                emit(Resource.Success(result))
             }
             is ApiResponse.Empty -> {
                 emitAll(loadFromDB().map { Resource.Success(it) })
@@ -28,6 +30,8 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             }
         }
     }
+
+    protected abstract fun onCallSuccess(data: RequestType): ResultType
 
     protected abstract fun loadFromDB(): Flow<ResultType>
 
