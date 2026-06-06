@@ -116,28 +116,28 @@ class HomeFragment : Fragment() {
                 with(binding) {
                     when (game) {
                         is Resource.Loading -> {
-                            progressBar.visibility = View.VISIBLE
                             viewError.root.visibility = View.GONE
                             setEnabledNextButton(false)
                             setEnabledPrevButton(false)
+                            showLoading(true)
                         }
 
                         is Resource.Success -> {
-                            progressBar.visibility = View.GONE
                             gameAdapter.submitList(game.data)
                             setEnabledNextButton(game.data?.isNotEmpty() == true)
                             setEnabledPrevButton(currentPage > 1)
                             tvPage.text = currentPage.toString()
+                            showLoading(false)
                         }
 
                         is Resource.Error -> {
-                            progressBar.visibility = View.GONE
                             viewError.root.visibility = View.VISIBLE
                             viewError.tvError.text =
                                 game.message ?: getString(R.string.something_wrong)
                             setEnabledNextButton(game.data?.isNotEmpty() == true)
                             setEnabledPrevButton(currentPage > 1)
                             tvPage.text = currentPage.toString()
+                            showLoading(false)
                         }
                     }
                 }
@@ -153,6 +153,10 @@ class HomeFragment : Fragment() {
     private fun setEnabledPrevButton(enable: Boolean) {
         binding.btnPrevPage.isEnabled = enable
         binding.btnPrevPage.setImageResource(if (enable) R.drawable.navigation_arrow_back else R.drawable.navigation_arrow_back_disabled)
+    }
+
+    private fun showLoading(visible: Boolean) {
+        binding.progressBar.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
