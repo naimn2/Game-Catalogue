@@ -35,7 +35,7 @@ class GameRepository @Inject constructor(
                 }
             }
 
-            override fun shouldFetch(data: List<Game>?): Boolean =
+            override fun isDBEmpty(data: List<Game>?): Boolean =
                 data.isNullOrEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<List<GameResponse>>> =
