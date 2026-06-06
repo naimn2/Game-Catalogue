@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 // docs: https://api.rawg.io/docs/
-// https://api.rawg.io/api/games?page=2&page_size=20&ordering=-rating&key=772b302f010d4c4ab00afca96715979a
+// https://api.rawg.io/api/games?page=2&page_size=20&ordering=-rating&key=API_KEY
 
 interface ApiService {
     @GET("api/games")
