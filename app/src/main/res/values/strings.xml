@@ -16,4 +16,6 @@
     <string name="platforms">Platforms</string>
     <string name="favorite_button">Favorite Button</string>
     <string name="screenshots_of_game">Game Screenshots</string>
+    <string name="tags">Tags</string>
+    <string name="detail_star">detail_star</string>
 </resources>

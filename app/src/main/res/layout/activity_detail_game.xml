@@ -31,10 +31,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/empty"
-                app:titleTextColor="?attr/colorOnPrimary"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/empty"
+                app:titleTextColor="?attr/colorOnPrimary" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -69,12 +69,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_title" />
 
+            <ImageView
+                android:id="@+id/detail_star"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/detail_star"
+                android:src="@android:drawable/btn_star_big_on"
+                app:layout_constraintStart_toStartOf="@+id/tv_detail_platform"
+                app:layout_constraintTop_toTopOf="@id/label_rating" />
+
             <TextView
                 android:id="@+id/tv_detail_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_rating"
-                app:layout_constraintStart_toStartOf="@+id/tv_detail_genre"
+                app:layout_constraintStart_toEndOf="@+id/detail_star"
                 tools:text="4.5" />
 
             <TextView
@@ -115,6 +125,27 @@
                 tools:text="PC, PS5, Nintendo Switch" />
 
             <TextView
+                android:id="@+id/label_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_detail_padding"
+                android:text="@string/tags"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_platform" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_tags"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_tags"
+                tools:orientation="horizontal" />
+
+            <TextView
                 android:id="@+id/label_screenshots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,19 +153,18 @@
                 android:text="@string/screenshots_of_game"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_platform" />
+                app:layout_constraintTop_toBottomOf="@id/rv_tags" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_detail_screenshots"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/label_screenshots"
-                tools:listitem="@layout/detail_screenshot_item" />
+                app:layout_constraintTop_toBottomOf="@+id/label_screenshots" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

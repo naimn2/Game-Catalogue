@@ -25,9 +25,7 @@ object DataMapper {
                 reviewsCount = it.reviewsCount,
                 isFavorite = false,
                 genres = it.genres?.joinToString(", ") { genre -> genre?.name.toString() },
-                platforms = it.parentPlatforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() } + ", " + it.platforms?.joinToString(
-                    ", "
-                ) { platform -> platform?.platform?.name.toString() },
+                platforms = it.platforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() },
                 shortScreenshots = it.shortScreenshots?.joinToString(", ") { screeenshot -> screeenshot?.image.toString() },
                 tags = it.tags?.joinToString(", ") { tag -> tag?.name.toString() }
             )

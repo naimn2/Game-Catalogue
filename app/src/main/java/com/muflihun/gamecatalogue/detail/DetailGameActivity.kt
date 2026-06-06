@@ -34,6 +34,7 @@ class DetailGameActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val screenshotsAdapter = DetailScreenshotsAdapter()
+        val tagsAdapter = DetailTagsAdapter()
 
         game?.let {
             var currentStatusFavorite = game.isFavorite
@@ -44,6 +45,13 @@ class DetailGameActivity : AppCompatActivity() {
                     viewModel.setFavoriteGame(game, currentStatusFavorite)
                     setStatusFavoriteIcon(currentStatusFavorite)
                 }
+            }
+
+            tagsAdapter.tags = game.tags?.split(", ") ?: emptyList()
+            with(binding.rvTags) {
+                layoutManager = LinearLayoutManager(this@DetailGameActivity, LinearLayoutManager.HORIZONTAL, false)
+                setHasFixedSize(true)
+                adapter = tagsAdapter
             }
 
             screenshotsAdapter.screenshots =
