@@ -6,10 +6,14 @@
     <string name="image_description">Game Image</string>
     <string name="error_message">Something went wrong</string>
     <string name="empty_favorite">No favorite game found</string>
-    <string name="label_rating">Rating:</string>
-    <string name="label_release_date">Release Date:</string>
+    <string name="label_rating">Rating</string>
+    <string name="label_release_date">Release Date</string>
     <string name="text_title">Title</string>
     <string name="text_subtitle">Subtitle</string>
     <string name="something_wrong">Oops, something went wrong. Pleas try again later!</string>
     <string name="empty" />
+    <string name="genres">Genres</string>
+    <string name="platforms">Platforms</string>
+    <string name="favorite_button">Favorite Button</string>
+    <string name="screenshots_of_game">Game Screenshots</string>
 </resources>

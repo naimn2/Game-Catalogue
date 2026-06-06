@@ -6,7 +6,7 @@ import com.muflihun.core.domain.model.Game
 
 object DataMapper {
     fun mapResponsesToEntities(input: List<GameResponse>): List<GameEntity> =
-        input.map { it ->
+        input.map {
             GameEntity(
                 gameId = it.id,
                 name = it.name,
@@ -25,7 +25,11 @@ object DataMapper {
                 reviewsCount = it.reviewsCount,
                 isFavorite = false,
                 genres = it.genres?.joinToString(", ") { genre -> genre?.name.toString() },
-                platforms = it.platforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() }
+                platforms = it.parentPlatforms?.joinToString(", ") { platform -> platform?.platform?.name.toString() } + ", " + it.platforms?.joinToString(
+                    ", "
+                ) { platform -> platform?.platform?.name.toString() },
+                shortScreenshots = it.shortScreenshots?.joinToString(", ") { screeenshot -> screeenshot?.image.toString() },
+                tags = it.tags?.joinToString(", ") { tag -> tag?.name.toString() }
             )
         }
 
@@ -50,6 +54,8 @@ object DataMapper {
                 genres = it.genres,
                 platforms = it.platforms,
                 isFavorite = it.isFavorite,
+                shortScreenshots = it.shortScreenshots,
+                tags = it.tags,
             )
         }
 
@@ -72,5 +78,7 @@ object DataMapper {
         genres = input.genres,
         platforms = input.platforms,
         isFavorite = input.isFavorite,
+        shortScreenshots = input.shortScreenshots,
+        tags = input.tags,
     )
 }

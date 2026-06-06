@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat.getParcelableExtra
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.muflihun.core.domain.model.Game
 import com.muflihun.gamecatalogue.R
@@ -24,11 +25,15 @@ class DetailGameActivity : AppCompatActivity() {
 
         title = getString(R.string.empty)
 
-        val game = getParcelableExtra(intent,
-            EXTRA_DATA, Game::class.java)
+        val game = getParcelableExtra(
+            intent,
+            EXTRA_DATA, Game::class.java
+        )
         showDetailGame(game)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val screenshotsAdapter = DetailScreenshotsAdapter()
 
         game?.let {
             var currentStatusFavorite = game.isFavorite
@@ -40,8 +45,16 @@ class DetailGameActivity : AppCompatActivity() {
                     setStatusFavoriteIcon(currentStatusFavorite)
                 }
             }
-        }
 
+            screenshotsAdapter.screenshots =
+                game.shortScreenshots?.split(", ")?.filter { it != game.backgroundImage }
+                    ?: emptyList()
+            with(binding.rvDetailScreenshots) {
+                layoutManager = LinearLayoutManager(this@DetailGameActivity)
+                setHasFixedSize(true)
+                adapter = screenshotsAdapter
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -54,8 +67,8 @@ class DetailGameActivity : AppCompatActivity() {
             with(binding) {
                 tvDetailTitle.text = game.name
                 tvDetailRating.text = game.rating.toString()
-                tvDetailRelease.text = game.genres
-                tvDetailDescription.text = game.platforms
+                tvDetailGenre.text = game.genres
+                tvDetailPlatform.text = game.platforms
                 Glide.with(this@DetailGameActivity)
                     .load(game.backgroundImage)
                     .into(ivDetailImage)
@@ -65,9 +78,19 @@ class DetailGameActivity : AppCompatActivity() {
 
     private fun setStatusFavoriteIcon(statusFavorite: Boolean) {
         if (statusFavorite) {
-            binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_favorite_white))
+            binding.fab.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_favorite_white
+                )
+            )
         } else {
-            binding.fab.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_not_favorite_white))
+            binding.fab.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.ic_not_favorite_white
+                )
+            )
         }
     }
 

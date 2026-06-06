@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.muflihun.core.data.source.remote.response.TagsItem
 
 @Parcelize
 @Entity(tableName = "game")
@@ -16,8 +17,11 @@ data class GameEntity(
 	@ColumnInfo(name = "playtime")
     val playtime: Int? = null,
 
-//@ColumnInfo(name = "shortScreenshots")
-//	val shortScreenshots: List<ShortScreenshotsItem?>? = null,
+    @ColumnInfo(name = "shortScreenshots")
+	val shortScreenshots: String? = null,
+
+    @ColumnInfo(name = "tags")
+    val tags: String? = null,
 
     @ColumnInfo(name = "platforms")
 	val platforms: String? = null,
@@ -36,9 +40,6 @@ data class GameEntity(
 
     @PrimaryKey
     val gameId: Int? = null,
-
-//@ColumnInfo(name = "rating")
-//	val parentPlatforms: List<ParentPlatformsItem?>? = null,
 
 	@ColumnInfo(name = "ratingsCount")
     val ratingsCount: Int? = null,

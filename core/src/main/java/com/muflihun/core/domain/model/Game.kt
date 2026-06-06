@@ -11,6 +11,8 @@ data class Game(
 	val playtime: Int? = null,
 	val platforms: String? = null,
 	val ratingTop: Int? = null,
+	val shortScreenshots: String? = null,
+	val tags: String? = null,
 	val reviewsTextCount: Int? = null,
 	val genres: String? = null,
 	val saturatedColor: String? = null,

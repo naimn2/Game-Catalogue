@@ -73,40 +73,68 @@
                 android:id="@+id/tv_detail_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 app:layout_constraintBaseline_toBaselineOf="@id/label_rating"
-                app:layout_constraintStart_toEndOf="@id/label_rating"
+                app:layout_constraintStart_toStartOf="@+id/tv_detail_genre"
                 tools:text="4.5" />
 
             <TextView
-                android:id="@+id/label_release"
+                android:id="@+id/label_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/label_release_date"
+                android:text="@string/genres"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_rating" />
 
             <TextView
-                android:id="@+id/tv_detail_release"
+                android:id="@+id/tv_detail_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBaseline_toBaselineOf="@id/label_release"
-                app:layout_constraintStart_toEndOf="@id/label_release"
-                tools:text="2023-01-01" />
+                app:layout_constraintBaseline_toBaselineOf="@id/label_genre"
+                app:layout_constraintStart_toStartOf="@+id/tv_detail_platform"
+                tools:text="Action, RPG" />
 
             <TextView
-                android:id="@+id/tv_detail_description"
+                android:id="@+id/label_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/platforms"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_genre" />
+
+            <TextView
+                android:id="@+id/tv_detail_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/tv_detail_padding"
+                app:layout_constraintBaseline_toBaselineOf="@id/label_platform"
+                app:layout_constraintStart_toEndOf="@id/label_platform"
+                tools:text="PC, PS5, Nintendo Switch" />
+
+            <TextView
+                android:id="@+id/label_screenshots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tv_detail_padding"
+                android:text="@string/screenshots_of_game"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_platform" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_detail_screenshots"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/label_release"
-                tools:text="Description goes here..." />
+                app:layout_constraintTop_toBottomOf="@+id/label_screenshots"
+                tools:listitem="@layout/detail_screenshot_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -116,6 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:contentDescription="@string/favorite_button"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_not_favorite_white" />
