@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,30 +37,36 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            with(binding) {
-                popupMenu = PopupMenu(requireContext(), sortingChip)
-                popupMenu.menuInflater.inflate(R.menu.menu_sorting, popupMenu.menu)
+            setupUI()
+            setupObservers()
 
-                gameAdapter = GameAdapter()
-                gameAdapter.onItemClick = { selectedData ->
-                    val intent = Intent(activity, DetailGameActivity::class.java)
-                    intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
-                    startActivity(intent)
-                }
+            gamesViewModel.setApiKey(BuildConfig.RAWG_API_KEY)
+        }
+    }
 
-                with(rvGame) {
-                    layoutManager = LinearLayoutManager(context)
-                    setHasFixedSize(true)
-                    adapter = gameAdapter
-                }
+    private fun setupUI() {
+        with(binding) {
+            popupMenu = PopupMenu(requireContext(), sortingChip)
+            popupMenu.menuInflater.inflate(R.menu.menu_sorting, popupMenu.menu)
 
-                sortingChip.setOnClickListener {
-                    setupSortingChipMenu()
-                }
-
-                setupBtnPageNavigation()
-                setupSorting()
+            gameAdapter = GameAdapter()
+            gameAdapter.onItemClick = { selectedData ->
+                val intent = Intent(activity, DetailGameActivity::class.java)
+                intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
+                startActivity(intent)
             }
+
+            with(rvGame) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = gameAdapter
+            }
+
+            sortingChip.setOnClickListener { setupSortingChipMenu() }
+
+            btnPrevPage.setOnClickListener { gamesViewModel.prevPage() }
+
+            btnNextPage.setOnClickListener { gamesViewModel.nextPage() }
         }
     }
 
@@ -72,56 +77,40 @@ class HomeFragment : Fragment() {
                     gamesViewModel.setOrdering("-released")
                     true
                 }
+
                 R.id.menu_rating -> {
                     gamesViewModel.setOrdering("-rating")
                     true
                 }
+
                 else -> false
             }
         }
         popupMenu.show()
     }
 
-    private fun setupSorting() {
+    private fun setupObservers() {
         gamesViewModel.getOrdering().observe(viewLifecycleOwner) { ordering ->
             if (ordering != null) {
-                when (ordering) {
-                    "-rating" -> {
-                        binding.sortingChip.text = getString(R.string.sorting_by_rating)
-                    }
-                    "-released" -> {
-                        binding.sortingChip.text = getString(R.string.sorting_by_released)
-                    }
+                binding.sortingChip.text = when (ordering) {
+                    "-rating" -> getString(R.string.sorting_by_rating)
+                    "-released" -> getString(R.string.sorting_by_released)
+                    else -> binding.sortingChip.text
                 }
             }
         }
-    }
 
-    private fun setupBtnPageNavigation() {
-        with(binding) {
-            tvPage.text = gamesViewModel.getCurrentPageValue().toString()
-            btnPrevPage.setOnClickListener {
-                gamesViewModel.prevPage()
-            }
-            btnNextPage.setOnClickListener {
-                gamesViewModel.nextPage()
-            }
-        }
         gamesViewModel.getCurrentPage().observe(viewLifecycleOwner) { currentPage ->
             if (currentPage != null) {
                 binding.tvPage.text = currentPage.toString()
                 setEnabledPrevButton(currentPage > 1)
-                getGames()
             }
         }
-    }
 
-    private fun getGames() {
-        gamesViewModel.getGames(BuildConfig.RAWG_API_KEY).observe(viewLifecycleOwner) { game ->
-            if (game != null) {
+        gamesViewModel.games.observe(viewLifecycleOwner) { resource ->
+            if (resource != null) {
                 with(binding) {
-                    val currentPage = gamesViewModel.getCurrentPageValue()
-                    when (game) {
+                    when (resource) {
                         is Resource.Loading -> {
                             viewError.root.visibility = View.GONE
                             setEnabledNextButton(false)
@@ -130,20 +119,19 @@ class HomeFragment : Fragment() {
                         }
 
                         is Resource.Success -> {
-                            gameAdapter.submitList(game.data)
-                            setEnabledNextButton(game.data?.isNotEmpty() == true)
-                            setEnabledPrevButton(currentPage > 1)
-                            tvPage.text = currentPage.toString()
+                            gameAdapter.submitList(resource.data)
+                            val hasData = resource.data?.isNotEmpty() == true
+                            setEnabledNextButton(hasData)
+                            setEnabledPrevButton(gamesViewModel.getCurrentPageValue() > 1)
                             showLoading(false)
                         }
 
                         is Resource.Error -> {
                             viewError.root.visibility = View.VISIBLE
                             viewError.tvError.text =
-                                game.message ?: getString(R.string.something_wrong)
-                            setEnabledNextButton(game.data?.isNotEmpty() == true)
-                            setEnabledPrevButton(currentPage > 1)
-                            tvPage.text = currentPage.toString()
+                                resource.message ?: getString(R.string.something_wrong)
+                            setEnabledNextButton(false)
+                            setEnabledPrevButton(gamesViewModel.getCurrentPageValue() > 1)
                             showLoading(false)
                         }
                     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
 import com.muflihun.core.data.Resource
 import com.muflihun.core.domain.model.Game
 import com.muflihun.core.domain.usecase.GameUseCase
@@ -12,53 +13,50 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GamesViewModel @Inject constructor(private val gameUseCase: GameUseCase) : ViewModel() {
-    private var _game: LiveData<Resource<List<Game>>> = MutableLiveData()
 
-    val game get() = _game
+    private val _currentPage = MutableLiveData(1)
+    private val _ordering = MutableLiveData("-rating")
+    private val _apiKey = MutableLiveData<String>()
 
-    private var _currentPage = MutableLiveData(1)
-
-    private var _ordering = MutableLiveData("-rating")
-
-    fun getCurrentPage(): MutableLiveData<Int?> {
-        return _currentPage
+    val games: LiveData<Resource<List<Game>>> = _apiKey.switchMap { key ->
+        _currentPage.switchMap { page ->
+            gameUseCase.getAllGames(
+                page ?: 1,
+                20,
+                getOrdering().value,
+                key
+            ).asLiveData()
+        }
     }
 
-    fun getCurrentPageValue(): Int {
-        return _currentPage.value ?: 1
+    fun setApiKey(key: String) {
+        if (_apiKey.value != key) {
+            _apiKey.value = key
+        }
     }
 
-    fun getOrdering(): MutableLiveData<String?> {
-        return _ordering
-    }
+    fun getCurrentPage(): LiveData<Int> = _currentPage
 
-    fun getOrderingValue(): String {
-        return _ordering.value ?: "-rating"
-    }
+    fun getCurrentPageValue(): Int = _currentPage.value ?: 1
 
-    fun getGames(
-        key: String,
-    ): LiveData<Resource<List<Game>>> {
-        _game = gameUseCase.getAllGames(
-            getCurrentPageValue(),
-            20,
-            getOrderingValue(),
-            key
-        ).asLiveData()
-        return _game
-    }
+    fun getOrdering(): LiveData<String> = _ordering
 
     fun nextPage() {
-        _currentPage.value = _currentPage.value?.plus(1)
+        _currentPage.value = (_currentPage.value ?: 1) + 1
     }
 
     fun prevPage() {
-        _currentPage.value = _currentPage.value?.minus(1)
+        val current = _currentPage.value ?: 1
+        if (current > 1) {
+            _currentPage.value = current - 1
+        }
     }
 
     fun setOrdering(ordering: String) {
-        _ordering.value = ordering
-        _resetPage()
+        if (_ordering.value != ordering) {
+            _ordering.value = ordering
+            _resetPage()
+        }
     }
 
     private fun _resetPage() {
