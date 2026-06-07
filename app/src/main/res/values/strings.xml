@@ -2,9 +2,7 @@
     <string name="app_name">Game Catalogue</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
-    <string name="title_detail">Detail Game</string>
     <string name="image_description">Game Image</string>
-    <string name="error_message">Something went wrong</string>
     <string name="empty_favorite">No favorite game found</string>
     <string name="label_rating">Rating</string>
     <string name="label_release_date">Release Date</string>
@@ -18,7 +16,6 @@
     <string name="screenshots_of_game">Game Screenshots</string>
     <string name="tags">Tags</string>
     <string name="detail_star">detail_star</string>
-    <string name="sorting_by">Sorting by:</string>
     <string name="sorting_by_released">Sorting by: Released</string>
     <string name="sorting_by_rating">Sorting by: Rating</string>
     <string name="page">Page</string>
