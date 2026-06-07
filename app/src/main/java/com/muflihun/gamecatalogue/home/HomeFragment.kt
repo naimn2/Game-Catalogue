@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,10 +26,6 @@ class HomeFragment : Fragment() {
     private val gamesViewModel: GamesViewModel by viewModels()
     private lateinit var gameAdapter: GameAdapter
     private lateinit var popupMenu: PopupMenu
-
-    private var currentSorting = "-rating"
-
-    private var currentPage = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -59,61 +56,71 @@ class HomeFragment : Fragment() {
                 }
 
                 sortingChip.setOnClickListener {
-                    setupSortingChip()
+                    setupSortingChipMenu()
                 }
 
                 setupBtnPageNavigation()
+                setupSorting()
             }
-
-            getGames()
         }
     }
 
-    private fun setupSortingChip() {
+    private fun setupSortingChipMenu() {
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_release -> {
-                    binding.sortingChip.text = getString(R.string.sorting_by_released)
-                    currentSorting = "-released"
-                    currentPage = 1
-                    getGames()
+                    gamesViewModel.setOrdering("-released")
                     true
                 }
-
                 R.id.menu_rating -> {
-                    binding.sortingChip.text = getString(R.string.sorting_by_rating)
-                    currentSorting = "-rating"
-                    currentPage = 1
-                    getGames()
+                    gamesViewModel.setOrdering("-rating")
                     true
                 }
-
                 else -> false
             }
         }
         popupMenu.show()
     }
 
+    private fun setupSorting() {
+        gamesViewModel.getOrdering().observe(viewLifecycleOwner) { ordering ->
+            if (ordering != null) {
+                when (ordering) {
+                    "-rating" -> {
+                        binding.sortingChip.text = getString(R.string.sorting_by_rating)
+                    }
+                    "-released" -> {
+                        binding.sortingChip.text = getString(R.string.sorting_by_released)
+                    }
+                }
+            }
+        }
+    }
+
     private fun setupBtnPageNavigation() {
         with(binding) {
-            tvPage.text = currentPage.toString()
+            tvPage.text = gamesViewModel.getCurrentPageValue().toString()
             btnPrevPage.setOnClickListener {
-                currentPage--
-                getGames()
+                gamesViewModel.prevPage()
             }
             btnNextPage.setOnClickListener {
-                currentPage++
+                gamesViewModel.nextPage()
+            }
+        }
+        gamesViewModel.getCurrentPage().observe(viewLifecycleOwner) { currentPage ->
+            if (currentPage != null) {
+                binding.tvPage.text = currentPage.toString()
+                setEnabledPrevButton(currentPage > 1)
                 getGames()
             }
         }
     }
 
     private fun getGames() {
-        gamesViewModel.getGames(
-            currentPage, 20, currentSorting, BuildConfig.RAWG_API_KEY
-        ).observe(viewLifecycleOwner) { game ->
+        gamesViewModel.getGames(BuildConfig.RAWG_API_KEY).observe(viewLifecycleOwner) { game ->
             if (game != null) {
                 with(binding) {
+                    val currentPage = gamesViewModel.getCurrentPageValue()
                     when (game) {
                         is Resource.Loading -> {
                             viewError.root.visibility = View.GONE
