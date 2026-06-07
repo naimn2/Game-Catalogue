@@ -43,9 +43,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     api(libs.androidx.constraintlayout)
     api(libs.google.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testApi(libs.junit)
+    androidTestApi(libs.androidx.junit)
+    androidTestApi(libs.androidx.espresso.core)
 
     api(libs.recyclerview)
     api(libs.material)
@@ -77,5 +77,7 @@ dependencies {
     api(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    api(libs.androidx.junit.ktx)
+    androidTestApi(libs.androidx.junit.ktx)
+
+    debugApi(libs.square.leakcanary)
 }

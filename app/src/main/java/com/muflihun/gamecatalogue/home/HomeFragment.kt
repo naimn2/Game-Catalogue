@@ -23,8 +23,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val gamesViewModel: GamesViewModel by viewModels()
-    private lateinit var gameAdapter: GameAdapter
-    private lateinit var popupMenu: PopupMenu
+    private var gameAdapter: GameAdapter? = null
+    private var popupMenu: PopupMenu? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,11 +46,12 @@ class HomeFragment : Fragment() {
 
     private fun setupUI() {
         with(binding) {
-            popupMenu = PopupMenu(requireContext(), sortingChip)
-            popupMenu.menuInflater.inflate(R.menu.menu_sorting, popupMenu.menu)
+            val menu = PopupMenu(requireContext(), sortingChip)
+            menu.menuInflater.inflate(R.menu.menu_sorting, menu.menu)
+            popupMenu = menu
 
             gameAdapter = GameAdapter()
-            gameAdapter.onItemClick = { selectedData ->
+            gameAdapter?.onItemClick = { selectedData ->
                 val intent = Intent(activity, DetailGameActivity::class.java)
                 intent.putExtra(DetailGameActivity.EXTRA_DATA, selectedData)
                 startActivity(intent)
@@ -71,7 +72,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSortingChipMenu() {
-        popupMenu.setOnMenuItemClickListener { item ->
+        popupMenu?.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_release -> {
                     gamesViewModel.setOrdering("-released")
@@ -86,7 +87,7 @@ class HomeFragment : Fragment() {
                 else -> false
             }
         }
-        popupMenu.show()
+        popupMenu?.show()
     }
 
     private fun setupObservers() {
@@ -119,7 +120,7 @@ class HomeFragment : Fragment() {
                         }
 
                         is Resource.Success -> {
-                            gameAdapter.submitList(resource.data)
+                            gameAdapter?.submitList(resource.data)
                             val hasData = resource.data?.isNotEmpty() == true
                             setEnabledNextButton(hasData)
                             setEnabledPrevButton(gamesViewModel.getCurrentPageValue() > 1)
@@ -156,6 +157,9 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        popupMenu?.dismiss()
+        popupMenu = null
         _binding = null
+        gameAdapter = null
     }
 }
