@@ -23,6 +23,8 @@ navigationFragment = "2.9.8"
 junitKtx = "1.3.0"
 materialVersion = "1.14.0"
 leakcanaryVersion = "2.14"
+androidDatabaseSqlcipher = "4.5.4"
+sqliteKtx = "2.4.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
@@ -54,6 +56,8 @@ androidx-navigation-dynamic = { group = "androidx.navigation", name = "navigatio
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 square-leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanaryVersion" }
+android-database-sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "androidDatabaseSqlcipher" }
+androidx-sqlite-ktx = { module = "androidx.sqlite:sqlite-ktx", version.ref = "sqliteKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

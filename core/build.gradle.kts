@@ -80,4 +80,7 @@ dependencies {
     androidTestApi(libs.androidx.junit.ktx)
 
     debugApi(libs.square.leakcanary)
+
+    implementation(libs.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
 }
