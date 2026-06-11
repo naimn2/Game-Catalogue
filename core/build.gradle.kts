@@ -48,9 +48,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     api(libs.androidx.constraintlayout)
     api(libs.google.material)
-    testApi(libs.junit)
-    androidTestApi(libs.androidx.junit)
-    androidTestApi(libs.androidx.espresso.core)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 
     api(libs.recyclerview)
     api(libs.material)
