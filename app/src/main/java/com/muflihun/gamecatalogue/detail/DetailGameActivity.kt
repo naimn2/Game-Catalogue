@@ -23,12 +23,11 @@ class DetailGameActivity : AppCompatActivity() {
         binding = ActivityDetailGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title = getString(R.string.empty)
-
         val game = getParcelableExtra(
             intent,
             EXTRA_DATA, Game::class.java
         )
+        title = game?.name ?: getString(R.string.empty)
         showDetailGame(game)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
