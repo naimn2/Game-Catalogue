@@ -3,7 +3,9 @@
 A comprehensive Android application for browsing games, built with modern Android development tools and best practices.
 
 ## 🎬 Demo
+
 https://github.com/user-attachments/assets/4fbff51b-9d4c-4e0b-a346-5a1aec42ba83
+
 https://github.com/user-attachments/assets/cab2efc6-0869-4fd2-8d19-ba54eb110c3a
 
 ## 🏗 Architecture
